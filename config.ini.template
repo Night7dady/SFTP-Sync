@@ -1,0 +1,48 @@
+; ============================================================
+; SFTP -> OSS 同步系统配置文件
+; ============================================================
+; 部署位置:/etc/sftp-sync/config.ini
+; 权限必须设为 600(只有 root 能读),含敏感凭据:
+;   sudo chmod 600 /etc/sftp-sync/config.ini
+; ============================================================
+
+[sftp]
+; SFTP 服务器连接信息
+host = 120.41.7.126
+port = 65022
+user = user005
+; 把下面的占位改成实际密码;首次连接前用 ssh -p 65022 user005@120.41.7.126
+; 或者 ssh-keyscan -p 65022 120.41.7.126 >> ~/.ssh/known_hosts 接受 host key
+password = <在这里填 SFTP 密码>
+
+
+[oss]
+; 阿里云 OSS 信息
+bucket = marketdata-cn
+; 内网 endpoint 走免费流量,要求 ECS 和 bucket 同地域
+endpoint = oss-cn-shanghai-internal.aliyuncs.com
+; RAM 子账号 AK(强烈不要用主账号 AK)
+; 子账号权限只授予对 marketdata-cn 一个 bucket 的读写
+access_key_id = <在这里填 RAM 子账号 AccessKey ID>
+access_key_secret = <在这里填 RAM 子账号 AccessKey Secret>
+
+
+[sync]
+; SFTP 远端根目录,8 个交易所在它下面各占一个子目录
+remote_root = /data
+
+; 本地临时下载区(单文件下完即传即删,占用极小)
+; cron 每次启动前会自动清空,防止累积残留
+local_staging = /data/staging
+
+; 日志目录,每天一个文件 sync-YYYYMMDD.log
+log_dir = /var/log/sftp-sync
+
+; 同步顺序,逗号分隔,靠前的优先
+; 当前优先 SSE/SZSE(大 tar.zst 文件,带宽利用率最高)
+; 完整列表:CFFEX,CZCE,DCE,GFEX,INE,SHFE,SSE,SZSE
+exchanges = SSE,SZSE,DCE,CFFEX,GFEX,CZCE,INE,SHFE
+
+; 每次同步到这个时间点自动优雅退出(HH:MM,24 小时制)
+; 支持跨夜:如果 cron 在 23:30 启动,deadline 07:30 会被理解为次日 07:30
+deadline = 07:30
