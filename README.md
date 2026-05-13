@@ -51,14 +51,14 @@ OSS Bucket (marketdata-cn, oss-cn-shanghai)
 
 ```ini
 [sftp]
-host = 120.41.7.126
-port = 65022
-user = user005
+host = <SFTP地址>
+port = <SFTP端口>
+user = <SFTP用户名>
 password = <SFTP 密码>
 
 [oss]
-bucket = marketdata-cn
-endpoint = oss-cn-shanghai-internal.aliyuncs.com
+bucket = <bucket 名称>
+endpoint = <oss 地址>
 access_key_id = <RAM 子账号 AK ID>
 access_key_secret = <RAM 子账号 AK Secret>
 
@@ -66,8 +66,8 @@ access_key_secret = <RAM 子账号 AK Secret>
 remote_root = /data
 local_staging = /data/staging
 log_dir = /var/log/sftp-sync
-exchanges = SSE,SZSE,DCE,CFFEX,GFEX,CZCE,INE,SHFE
-deadline = 07:30
+exchanges = 
+deadline = <结束时间 24H> eg: 7:30
 ```
 
 **字段说明**
