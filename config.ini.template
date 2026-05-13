@@ -8,9 +8,9 @@
 
 [sftp]
 ; SFTP 服务器连接信息
-host = 120.41.7.126
-port = 65022
-user = user005
+host = 
+port = 
+user = 
 ; 把下面的占位改成实际密码;首次连接前用 ssh -p 65022 user005@120.41.7.126
 ; 或者 ssh-keyscan -p 65022 120.41.7.126 >> ~/.ssh/known_hosts 接受 host key
 password = <在这里填 SFTP 密码>
