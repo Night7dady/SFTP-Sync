@@ -1,0 +1,32 @@
+# 在仓库根目录
+cat > .gitignore << 'EOF'
+# 凭据 / 配置
+config.ini
+.env
+secrets/
+
+# 备份
+*.bak
+*.bak.*
+*.v1.bak
+*.v2.bak
+*.v3.bak
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*~
+
+# 日志
+*.log
+EOF
+
+git add .gitignore
+git commit -m "Add .gitignore"
+git push origin main
